@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ArtifactWorld — 3D Gaussian Splatting Artifact Restoration</title>
+  <meta name="description" content="ArtifactWorld: Scaling 3D Gaussian Splatting Artifact Restoration via Video Generation Models (arXiv:2604.12251)." />
+  <meta property="og:title" content="ArtifactWorld" />
+  <meta property="og:description" content="Sparse-view 3DGS artifact restoration via video diffusion, heatmap guidance, and large-scale paired video data." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://fyting.github.io/ArtifactWorld/" />
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a21;
+      --text: #e8eaed;
+      --muted: #9aa0a6;
+      --accent: #7c9eff;
+      --border: #2a3038;
+      --code-bg: #12151c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 50% -10%, #1a2340 0%, var(--bg) 55%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 820px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    header { text-align: center; margin-bottom: 2rem; }
+    h1 {
+      font-size: clamp(1.55rem, 4vw, 2.1rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+    .subtitle { color: var(--muted); font-size: 1rem; margin: 0 0 1.25rem; }
+    .authors { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+    .authors span { color: var(--text); }
+    .btns {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.55rem 1rem; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--panel);
+      color: var(--text); font-size: 0.9rem; font-weight: 500;
+    }
+    .btn:hover { border-color: var(--accent); text-decoration: none; }
+    .btn.primary { background: var(--accent); color: #0b0d12; border-color: transparent; }
+    .btn.primary:hover { filter: brightness(1.08); }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.35rem;
+      margin-top: 1.25rem;
+    }
+    section h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .abstract { font-size: 0.98rem; color: #d3d7de; }
+    pre {
+      margin: 0; padding: 1rem;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: #c9ced6;
+    }
+    footer { text-align: center; margin-top: 2rem; font-size: 0.85rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>ArtifactWorld: Scaling 3D Gaussian Splatting Artifact Restoration via Video Generation Models</h1>
+      <p class="subtitle">CVPR-style project page · arXiv:2604.12251</p>
+      <p class="authors">
+        <span>Xinliang Wang</span>,
+        <span>Yifeng Shi</span>,
+        <span>Zhenyu Wu</span>
+      </p>
+      <div class="btns">
+        <a class="btn primary" href="https://arxiv.org/pdf/2604.12251.pdf" target="_blank" rel="noopener">Paper (PDF)</a>
+        <a class="btn" href="https://arxiv.org/abs/2604.12251" target="_blank" rel="noopener">arXiv</a>
+        <a class="btn" href="https://github.com/fyting/ArtifactWorld" target="_blank" rel="noopener">Code</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>Abstract</h2>
+      <p class="abstract">
+        3D Gaussian Splatting (3DGS) delivers high-fidelity real-time rendering but suffers from geometric and photometric degradations under sparse-view constraints. Current generative restoration approaches are often limited by insufficient temporal coherence, a lack of explicit spatial constraints, and a lack of large-scale training data, resulting in multi-view inconsistencies, erroneous geometric hallucinations, and limited generalization to diverse real-world artifact distributions. In this paper, we present <strong>ArtifactWorld</strong>, a framework that resolves 3DGS artifact repair through systematic data expansion and a homogeneous dual-model paradigm. To address the data bottleneck, we establish a fine-grained phenomenological taxonomy of 3DGS artifacts and construct a comprehensive training set of 107.5K diverse paired video clips to enhance model robustness. Architecturally, we unify the restoration process within a video diffusion backbone, utilizing an isomorphic predictor to localize structural defects via an artifact heatmap. This heatmap then guides the restoration through an Artifact-Aware Triplet Fusion mechanism, enabling precise, intensity-guided spatio-temporal repair within native self-attention. Extensive experiments demonstrate that ArtifactWorld achieves state-of-the-art performance in sparse novel view synthesis and robust 3D reconstruction. Code and dataset will be made public.
+      </p>
+    </section>
+
+    <section>
+      <h2>BibTeX</h2>
+      <pre><code>@article{wang2026artifactworld,
+  title={ArtifactWorld: Scaling {3D} {G}aussian {S}platting Artifact Restoration via Video Generation Models},
+  author={Wang, Xinliang and Shi, Yifeng and Wu, Zhenyu},
+  journal={arXiv preprint arXiv:2604.12251},
+  year={2026}
+}</code></pre>
+    </section>
+
+    <footer>
+      This site is hosted with <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>.
+      Update this page in <code>index.html</code> on the default branch.
+    </footer>
+  </div>
+</body>
+</html>
