@@ -17,7 +17,6 @@
       --muted: #5c5c5c;
       --rule: #dadada;
       --accent: #1a73e8;
-      --tab-bg: #ececec;
       --tab-active: #1b1b1b;
       --max: 960px;
     }
@@ -32,16 +31,9 @@
     }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    .page {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 1.75rem 1.25rem 4rem;
-    }
+    .page { max-width: var(--max); margin: 0 auto; padding: 1.75rem 1.25rem 4rem; }
     .top-meta {
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 1.25rem;
+      text-align: center; font-size: 0.9rem; color: var(--muted); margin-bottom: 1.25rem;
     }
     .top-meta a { color: var(--muted); font-weight: 500; }
     .top-meta a:hover { color: var(--text); }
@@ -52,57 +44,47 @@
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 1.2;
-      margin: 0 0 0.75rem;
+      margin: 0 auto 0.75rem;
       max-width: 52rem;
-      margin-left: auto;
-      margin-right: auto;
     }
-    .authors {
-      color: var(--muted);
-      font-size: 1rem;
-      margin: 0 0 0.35rem;
-    }
+    .authors { color: var(--muted); font-size: 1rem; margin: 0 0 0.35rem; }
     .authors .name { color: var(--text); }
-    .venue {
-      margin: 0.75rem 0 1.25rem;
-      font-size: 0.95rem;
-      color: var(--muted);
-    }
-    .links-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      justify-content: center;
-      align-items: center;
-    }
+    .venue { margin: 0.75rem 0 1.25rem; font-size: 0.95rem; color: var(--muted); }
+    .links-row { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; align-items: center; }
     .chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.45rem 0.85rem;
-      border: 1px solid var(--rule);
-      border-radius: 999px;
-      background: var(--surface);
-      color: var(--text);
-      font-size: 0.9rem;
-      font-weight: 500;
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.45rem 0.85rem; border: 1px solid var(--rule); border-radius: 999px;
+      background: var(--surface); color: var(--text); font-size: 0.9rem; font-weight: 500;
     }
     .chip:hover { border-color: #bbb; text-decoration: none; }
     section { margin-top: 2.5rem; }
     section > h2 {
-      margin: 0;
-      font-size: 1.35rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
+      margin: 0; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em;
     }
-    hr.section-rule {
-      border: none;
-      border-top: 1px solid var(--rule);
-      margin: 0.65rem 0 1rem;
-    }
+    hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 0.65rem 0 1rem; }
     .prose { color: #333; }
     .prose p { margin: 0 0 0.85rem; }
-    /* --- Video blocks (ArtiFixer-like: full column width, dark stage, captions) --- */
+    .pdf-wrap {
+      margin-top: 1rem;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .pdf-wrap iframe {
+      display: block;
+      width: 100%;
+      height: min(78vh, 820px);
+      border: 0;
+    }
+    .pdf-link {
+      padding: 0.5rem 1rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      border-top: 1px solid var(--rule);
+      background: #fff;
+    }
     .video-block {
       margin-top: 1rem;
       background: var(--surface);
@@ -111,6 +93,7 @@
       overflow: hidden;
       box-shadow: 0 1px 2px rgba(0,0,0,0.04);
     }
+    .video-tabs > .video-block { margin-top: 0; }
     .video-stage {
       position: relative;
       width: 100%;
@@ -146,8 +129,8 @@
       cursor: pointer;
       border: 1px solid transparent;
       border-radius: 999px;
-      padding: 0.35rem 0.75rem;
-      font-size: 0.88rem;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.82rem;
       color: var(--muted);
       background: transparent;
     }
@@ -157,22 +140,22 @@
       background: var(--tab-active);
       border-color: var(--tab-active);
     }
-    .compare-grid {
+    .cases-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 0.75rem;
+      gap: 1rem;
       margin-top: 1rem;
     }
-    @media (min-width: 720px) {
-      .compare-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (min-width: 700px) {
+      .cases-grid.three { grid-template-columns: repeat(3, 1fr); }
     }
-    .compare-cell .label {
+    .case-card .case-label {
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--muted);
       margin: 0 0 0.35rem 0.15rem;
     }
-    .compare-cell .video-block { margin-top: 0; }
+    .case-card .video-block { margin-top: 0; }
     pre {
       margin: 0;
       padding: 1rem 1.1rem;
@@ -184,12 +167,7 @@
       line-height: 1.45;
       color: #222;
     }
-    footer {
-      text-align: center;
-      margin-top: 3rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
+    footer { text-align: center; margin-top: 3rem; font-size: 0.85rem; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -216,71 +194,134 @@
       </div>
     </header>
 
-    <section id="teaser">
-      <h2>Teaser</h2>
-      <hr class="section-rule" />
-      <p class="prose">Short orbit / comparison video (layout mirrors NVIDIA SIL project pages such as <a href="https://research.nvidia.com/labs/sil/projects/artifixer/" target="_blank" rel="noopener">ArtiFixer</a>): full content width, 16:9 stage, caption strip, optional scene tabs below.</p>
-      <div class="video-block">
-        <div class="video-stage">
-          <video id="teaser-video" controls playsinline muted loop preload="metadata" src="assets/teaser.mp4"></video>
-        </div>
-        <div class="video-caption" id="teaser-caption">Main teaser — replace <code>assets/teaser.mp4</code>.</div>
-        <div class="tab-strip" role="tablist" aria-label="Teaser variants">
-          <button type="button" class="active" data-src="assets/teaser.mp4" data-cap="Main teaser">Default</button>
-          <button type="button" data-src="assets/teaser_scene2.mp4" data-cap="Alternate clip (optional)">Scene 2</button>
-          <button type="button" data-src="assets/teaser_scene3.mp4" data-cap="Alternate clip (optional)">Scene 3</button>
-        </div>
-      </div>
-    </section>
-
     <section id="abstract">
       <h2>Abstract</h2>
       <hr class="section-rule" />
       <div class="prose">
         <p>
-          3D Gaussian Splatting (3DGS) delivers high-fidelity real-time rendering but suffers from geometric and photometric degradations under sparse-view constraints. Current generative restoration approaches are often limited by insufficient temporal coherence, a lack of explicit spatial constraints, and a lack of large-scale training data, resulting in multi-view inconsistencies, erroneous geometric hallucinations, and limited generalization to diverse real-world artifact distributions.
-        </p>
-        <p>
-          In this paper, we present <strong>ArtifactWorld</strong>, a framework that resolves 3DGS artifact repair through systematic data expansion and a homogeneous dual-model paradigm. We establish a fine-grained phenomenological taxonomy of 3DGS artifacts and construct a comprehensive training set of 107.5K diverse paired video clips. Architecturally, we unify the restoration process within a video diffusion backbone, utilizing an isomorphic predictor to localize structural defects via an artifact heatmap, which guides restoration through an Artifact-Aware Triplet Fusion mechanism. Extensive experiments demonstrate state-of-the-art performance in sparse novel view synthesis and robust 3D reconstruction. Code and dataset will be made public.
+          3D Gaussian Splatting (3DGS) delivers high-fidelity real-time rendering but suffers from geometric and photometric degradations under sparse-view constraints. Current generative restoration approaches are often limited by insufficient temporal coherence, a lack of explicit spatial constraints, and a lack of large-scale training data, resulting in multi-view inconsistencies, erroneous geometric hallucinations, and limited generalization to diverse real-world artifact distributions. In this paper, we present ArtifactWorld, a framework that resolves 3DGS artifact repair through systematic data expansion and a homogeneous dual-model paradigm. To address the data bottleneck, we establish a fine-grained phenomenological taxonomy of 3DGS artifacts and construct a comprehensive training set of 107.5K diverse paired video clips to enhance model robustness. Architecturally, we unify the restoration process within a video diffusion backbone, utilizing an isomorphic predictor to localize structural defects via an artifact heatmap. This heatmap then guides the restoration through an Artifact-Aware Triplet Fusion mechanism, enabling precise, intensity-guided spatio-temporal repair within native self-attention. Extensive experiments demonstrate that ArtifactWorld achieves state-of-the-art performance in sparse novel view synthesis and robust 3D reconstruction. Code and dataset will be made public.
         </p>
       </div>
     </section>
 
-    <section id="method">
-      <h2>Method</h2>
+    <section id="benchmark">
+      <h2>ArtifactWorld Benchmark &amp; Data Scaling</h2>
       <hr class="section-rule" />
       <div class="prose">
         <p>
-          ArtifactWorld uses a video diffusion backbone with a defect-localization branch (artifact heatmap) and Artifact-Aware Triplet Fusion so spatio-temporal repair stays aligned with corrupted regions while preserving multi-view coherence—conceptually similar in spirit to “wide video + clear sectioning” on project pages like ArtiFixer, but for 3DGS artifact restoration rather than NVS extrapolation.
+          We formalize 3DGS failures under sparse views with a <strong>fine-grained phenomenological taxonomy</strong> of artifacts, so supervision covers diverse geometric/photometric degradations instead of a single “blur” hypothesis. Building on this taxonomy, we scale paired temporal observations by curating <strong>107.5K diverse paired video clips</strong>, substantially widening artifact diversity and scene coverage relative to prior restoration settings that are bottlenecked by small or narrow training corpora—improving robustness to real-world artifact distributions.
         </p>
       </div>
-      <div class="video-block" style="margin-top:1rem;">
-        <div class="video-stage">
-          <video controls playsinline muted loop preload="metadata" src="assets/method.mp4"></video>
-        </div>
-        <div class="video-caption">Method overview video — add <code>assets/method.mp4</code> (diagram / pipeline animation).</div>
+      <div class="pdf-wrap">
+        <iframe title="ArtifactWorld benchmark and data scaling" src="src/data.pdf#view=FitH"></iframe>
+        <div class="pdf-link">If the figure does not render inline in your browser, <a href="src/data.pdf" target="_blank" rel="noopener">open <code>src/data.pdf</code></a>.</div>
       </div>
     </section>
 
-    <section id="comparisons">
-      <h2>Qualitative comparisons</h2>
+    <section id="methodology">
+      <h2>Methodology</h2>
       <hr class="section-rule" />
-      <p class="prose">Two-up video row (same width as ArtiFixer-style comparison blocks on wide screens; stacks on mobile).</p>
-      <div class="compare-grid">
-        <div class="compare-cell">
-          <p class="label">ArtifactWorld (ours)</p>
-          <div class="video-block">
-            <div class="video-stage">
-              <video controls playsinline muted loop preload="metadata" src="assets/compare_ours.mp4"></video>
-            </div>
+      <div class="prose">
+        <p>
+          ArtifactWorld follows a <strong>homogeneous dual-model paradigm</strong>: restoration is unified inside a <strong>video diffusion backbone</strong> to improve temporal coherence, while an <strong>isomorphic predictor</strong> produces an <strong>artifact heatmap</strong> that explicitly localizes structural defects. The heatmap is fused into denoising via an <strong>Artifact-Aware Triplet Fusion</strong> mechanism, yielding intensity-guided, defect-aligned spatio-temporal repair within native <strong>self-attention</strong>—reducing multi-view inconsistency and geometric hallucinations compared with image-only or weakly constrained video priors.
+        </p>
+      </div>
+      <div class="pdf-wrap">
+        <iframe title="ArtifactWorld methodology" src="src/method.pdf#view=FitH"></iframe>
+        <div class="pdf-link">Fallback: <a href="src/method.pdf" target="_blank" rel="noopener">open <code>src/method.pdf</code></a>.</div>
+      </div>
+    </section>
+
+    <section id="artifact-restoration">
+      <h2>Artifact Restoration Comparisons</h2>
+      <hr class="section-rule" />
+      <p class="prose">Nine artifact categories; each tab switches the player below. Replace video files under <code>src/</code> and rename the tab labels to match your taxonomy.</p>
+      <div class="video-tabs" style="margin-top:1rem;">
+        <div class="video-block">
+          <div class="video-stage">
+            <video id="artifact-video" controls playsinline muted loop preload="metadata" src="src/artifact_restoration_01.mp4"></video>
+          </div>
+          <div class="video-caption" id="artifact-caption">伪影类别 1 — 视频：<code>src/artifact_restoration_01.mp4</code></div>
+          <div class="tab-strip" role="tablist" aria-label="Artifact categories">
+            <button type="button" class="active" data-src="src/artifact_restoration_01.mp4" data-cap="伪影类别 1 — 视频：src/artifact_restoration_01.mp4">类别 1</button>
+            <button type="button" data-src="src/artifact_restoration_02.mp4" data-cap="伪影类别 2 — 视频：src/artifact_restoration_02.mp4">类别 2</button>
+            <button type="button" data-src="src/artifact_restoration_03.mp4" data-cap="伪影类别 3 — 视频：src/artifact_restoration_03.mp4">类别 3</button>
+            <button type="button" data-src="src/artifact_restoration_04.mp4" data-cap="伪影类别 4 — 视频：src/artifact_restoration_04.mp4">类别 4</button>
+            <button type="button" data-src="src/artifact_restoration_05.mp4" data-cap="伪影类别 5 — 视频：src/artifact_restoration_05.mp4">类别 5</button>
+            <button type="button" data-src="src/artifact_restoration_06.mp4" data-cap="伪影类别 6 — 视频：src/artifact_restoration_06.mp4">类别 6</button>
+            <button type="button" data-src="src/artifact_restoration_07.mp4" data-cap="伪影类别 7 — 视频：src/artifact_restoration_07.mp4">类别 7</button>
+            <button type="button" data-src="src/artifact_restoration_08.mp4" data-cap="伪影类别 8 — 视频：src/artifact_restoration_08.mp4">类别 8</button>
+            <button type="button" data-src="src/artifact_restoration_09.mp4" data-cap="伪影类别 9 — 视频：src/artifact_restoration_09.mp4">类别 9</button>
           </div>
         </div>
-        <div class="compare-cell">
-          <p class="label">Baseline</p>
+      </div>
+    </section>
+
+    <section id="dl3dv">
+      <h2>DL3DV Comparisons</h2>
+      <hr class="section-rule" />
+      <p class="prose">Three cases; add one video per case.</p>
+      <div class="cases-grid three">
+        <div class="case-card">
+          <p class="case-label">Case 1</p>
           <div class="video-block">
             <div class="video-stage">
-              <video controls playsinline muted loop preload="metadata" src="assets/compare_baseline.mp4"></video>
+              <video controls playsinline muted loop preload="metadata" src="src/dl3dv_case_01.mp4"></video>
             </div>
+            <div class="video-caption"><code>src/dl3dv_case_01.mp4</code></div>
+          </div>
+        </div>
+        <div class="case-card">
+          <p class="case-label">Case 2</p>
+          <div class="video-block">
+            <div class="video-stage">
+              <video controls playsinline muted loop preload="metadata" src="src/dl3dv_case_02.mp4"></video>
+            </div>
+            <div class="video-caption"><code>src/dl3dv_case_02.mp4</code></div>
+          </div>
+        </div>
+        <div class="case-card">
+          <p class="case-label">Case 3</p>
+          <div class="video-block">
+            <div class="video-stage">
+              <video controls playsinline muted loop preload="metadata" src="src/dl3dv_case_03.mp4"></video>
+            </div>
+            <div class="video-caption"><code>src/dl3dv_case_03.mp4</code></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mipnerf360">
+      <h2>MipNeRF 360 Comparisons</h2>
+      <hr class="section-rule" />
+      <p class="prose">Three cases; add one video per case.</p>
+      <div class="cases-grid three">
+        <div class="case-card">
+          <p class="case-label">Case 1</p>
+          <div class="video-block">
+            <div class="video-stage">
+              <video controls playsinline muted loop preload="metadata" src="src/mipnerf360_case_01.mp4"></video>
+            </div>
+            <div class="video-caption"><code>src/mipnerf360_case_01.mp4</code></div>
+          </div>
+        </div>
+        <div class="case-card">
+          <p class="case-label">Case 2</p>
+          <div class="video-block">
+            <div class="video-stage">
+              <video controls playsinline muted loop preload="metadata" src="src/mipnerf360_case_02.mp4"></video>
+            </div>
+            <div class="video-caption"><code>src/mipnerf360_case_02.mp4</code></div>
+          </div>
+        </div>
+        <div class="case-card">
+          <p class="case-label">Case 3</p>
+          <div class="video-block">
+            <div class="video-stage">
+              <video controls playsinline muted loop preload="metadata" src="src/mipnerf360_case_03.mp4"></video>
+            </div>
+            <div class="video-caption"><code>src/mipnerf360_case_03.mp4</code></div>
           </div>
         </div>
       </div>
@@ -298,26 +339,28 @@
     </section>
 
     <footer>
-      Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>. Page layout inspired by <a href="https://research.nvidia.com/labs/sil/projects/artifixer/" target="_blank" rel="noopener">ArtiFixer</a> (SIL / NVIDIA Research).
+      Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>. Layout reference: <a href="https://research.nvidia.com/labs/sil/projects/artifixer/" target="_blank" rel="noopener">ArtiFixer</a>.
     </footer>
   </div>
 
   <script>
     (function () {
-      var v = document.getElementById("teaser-video");
-      var cap = document.getElementById("teaser-caption");
-      if (!v || !cap) return;
-      document.querySelectorAll(".tab-strip button").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          var src = btn.getAttribute("data-src");
-          var c = btn.getAttribute("data-cap") || "";
-          document.querySelectorAll(".tab-strip button").forEach(function (b) { b.classList.remove("active"); });
-          btn.classList.add("active");
-          cap.textContent = c;
-          if (!src) return;
-          v.pause();
-          v.src = src;
-          v.load();
+      document.querySelectorAll(".video-tabs").forEach(function (wrap) {
+        var v = wrap.querySelector("video");
+        var cap = wrap.querySelector(".video-caption");
+        if (!v || !cap) return;
+        wrap.querySelectorAll(".tab-strip button").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var src = btn.getAttribute("data-src");
+            var c = btn.getAttribute("data-cap") || "";
+            wrap.querySelectorAll(".tab-strip button").forEach(function (b) { b.classList.remove("active"); });
+            btn.classList.add("active");
+            cap.textContent = c;
+            if (!src) return;
+            v.pause();
+            v.src = src;
+            v.load();
+          });
         });
       });
     })();
