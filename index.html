@@ -6,108 +6,289 @@
   <title>ArtifactWorld — 3D Gaussian Splatting Artifact Restoration</title>
   <meta name="description" content="ArtifactWorld: Scaling 3D Gaussian Splatting Artifact Restoration via Video Generation Models (arXiv:2604.12251)." />
   <meta property="og:title" content="ArtifactWorld" />
-  <meta property="og:description" content="Sparse-view 3DGS artifact restoration via video diffusion, heatmap guidance, and large-scale paired video data." />
+  <meta property="og:description" content="Sparse-view 3DGS artifact restoration via video diffusion and large-scale paired video data." />
   <meta property="og:type" content="website" />
   <link rel="canonical" href="https://fyting.github.io/ArtifactWorld/" />
   <style>
     :root {
-      --bg: #0f1115;
-      --panel: #171a21;
-      --text: #e8eaed;
-      --muted: #9aa0a6;
-      --accent: #7c9eff;
-      --border: #2a3038;
-      --code-bg: #12151c;
+      --bg: #fafafa;
+      --surface: #fff;
+      --text: #1b1b1b;
+      --muted: #5c5c5c;
+      --rule: #dadada;
+      --accent: #1a73e8;
+      --tab-bg: #ececec;
+      --tab-active: #1b1b1b;
+      --max: 960px;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 50% -10%, #1a2340 0%, var(--bg) 55%);
+      background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.65;
+      font-size: 1rem;
     }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    .wrap { max-width: 820px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 4rem;
+    }
+    .top-meta {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+    .top-meta a { color: var(--muted); font-weight: 500; }
+    .top-meta a:hover { color: var(--text); }
+    .top-meta span.sep { margin: 0 0.35rem; opacity: 0.45; }
     header { text-align: center; margin-bottom: 2rem; }
     h1 {
-      font-size: clamp(1.55rem, 4vw, 2.1rem);
+      font-size: clamp(1.45rem, 3.6vw, 2rem);
       font-weight: 700;
       letter-spacing: -0.02em;
-      margin: 0 0 0.5rem;
-      line-height: 1.25;
-    }
-    .subtitle { color: var(--muted); font-size: 1rem; margin: 0 0 1.25rem; }
-    .authors { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
-    .authors span { color: var(--text); }
-    .btns {
-      display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      padding: 0.55rem 1rem; border-radius: 999px;
-      border: 1px solid var(--border); background: var(--panel);
-      color: var(--text); font-size: 0.9rem; font-weight: 500;
-    }
-    .btn:hover { border-color: var(--accent); text-decoration: none; }
-    .btn.primary { background: var(--accent); color: #0b0d12; border-color: transparent; }
-    .btn.primary:hover { filter: brightness(1.08); }
-    section {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem 1.35rem;
-      margin-top: 1.25rem;
-    }
-    section h2 {
+      line-height: 1.2;
       margin: 0 0 0.75rem;
-      font-size: 1.05rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
+      max-width: 52rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .authors {
+      color: var(--muted);
+      font-size: 1rem;
+      margin: 0 0 0.35rem;
+    }
+    .authors .name { color: var(--text); }
+    .venue {
+      margin: 0.75rem 0 1.25rem;
+      font-size: 0.95rem;
       color: var(--muted);
     }
-    .abstract { font-size: 0.98rem; color: #d3d7de; }
+    .links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .chip:hover { border-color: #bbb; text-decoration: none; }
+    section { margin-top: 2.5rem; }
+    section > h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    hr.section-rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0.65rem 0 1rem;
+    }
+    .prose { color: #333; }
+    .prose p { margin: 0 0 0.85rem; }
+    /* --- Video blocks (ArtiFixer-like: full column width, dark stage, captions) --- */
+    .video-block {
+      margin-top: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .video-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0a0a0a;
+    }
+    .video-stage video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #000;
+    }
+    .video-caption {
+      padding: 0.65rem 1rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      border-top: 1px solid var(--rule);
+      background: #fff;
+    }
+    .tab-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      padding: 0.65rem 0.75rem;
+      border-top: 1px solid var(--rule);
+      background: #f3f3f3;
+    }
+    .tab-strip button {
+      font: inherit;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      background: transparent;
+    }
+    .tab-strip button:hover { color: var(--text); background: rgba(0,0,0,0.04); }
+    .tab-strip button.active {
+      color: #fff;
+      background: var(--tab-active);
+      border-color: var(--tab-active);
+    }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    @media (min-width: 720px) {
+      .compare-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    }
+    .compare-cell .label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 0 0 0.35rem 0.15rem;
+    }
+    .compare-cell .video-block { margin-top: 0; }
     pre {
-      margin: 0; padding: 1rem;
-      background: var(--code-bg);
-      border: 1px solid var(--border);
+      margin: 0;
+      padding: 1rem 1.1rem;
+      background: #f6f8fa;
+      border: 1px solid var(--rule);
       border-radius: 8px;
       overflow-x: auto;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       line-height: 1.45;
-      color: #c9ced6;
+      color: #222;
     }
-    footer { text-align: center; margin-top: 2rem; font-size: 0.85rem; color: var(--muted); }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="page">
+    <div class="top-meta">
+      <a href="https://github.com/fyting/ArtifactWorld" target="_blank" rel="noopener">Project repository</a>
+      <span class="sep">·</span>
+      <a href="https://arxiv.org/abs/2604.12251" target="_blank" rel="noopener">arXiv:2604.12251</a>
+    </div>
+
     <header>
       <h1>ArtifactWorld: Scaling 3D Gaussian Splatting Artifact Restoration via Video Generation Models</h1>
-      <p class="subtitle">CVPR-style project page · arXiv:2604.12251</p>
       <p class="authors">
-        <span>Xinliang Wang</span>,
-        <span>Yifeng Shi</span>,
-        <span>Zhenyu Wu</span>
+        <span class="name">Xinliang Wang</span>,
+        <span class="name">Yifeng Shi</span>,
+        <span class="name">Zhenyu Wu</span>
       </p>
-      <div class="btns">
-        <a class="btn primary" href="https://arxiv.org/pdf/2604.12251.pdf" target="_blank" rel="noopener">Paper (PDF)</a>
-        <a class="btn" href="https://arxiv.org/abs/2604.12251" target="_blank" rel="noopener">arXiv</a>
-        <a class="btn" href="https://github.com/fyting/ArtifactWorld" target="_blank" rel="noopener">Code</a>
+      <p class="venue">Preprint · 2026</p>
+      <div class="links-row">
+        <a class="chip" href="https://arxiv.org/pdf/2604.12251.pdf" target="_blank" rel="noopener">Paper</a>
+        <a class="chip" href="https://arxiv.org/abs/2604.12251" target="_blank" rel="noopener">arXiv</a>
+        <a class="chip" href="https://github.com/fyting/ArtifactWorld" target="_blank" rel="noopener">Code</a>
+        <a class="chip" href="#citation">BibTeX</a>
       </div>
     </header>
 
-    <section>
-      <h2>Abstract</h2>
-      <p class="abstract">
-        3D Gaussian Splatting (3DGS) delivers high-fidelity real-time rendering but suffers from geometric and photometric degradations under sparse-view constraints. Current generative restoration approaches are often limited by insufficient temporal coherence, a lack of explicit spatial constraints, and a lack of large-scale training data, resulting in multi-view inconsistencies, erroneous geometric hallucinations, and limited generalization to diverse real-world artifact distributions. In this paper, we present <strong>ArtifactWorld</strong>, a framework that resolves 3DGS artifact repair through systematic data expansion and a homogeneous dual-model paradigm. To address the data bottleneck, we establish a fine-grained phenomenological taxonomy of 3DGS artifacts and construct a comprehensive training set of 107.5K diverse paired video clips to enhance model robustness. Architecturally, we unify the restoration process within a video diffusion backbone, utilizing an isomorphic predictor to localize structural defects via an artifact heatmap. This heatmap then guides the restoration through an Artifact-Aware Triplet Fusion mechanism, enabling precise, intensity-guided spatio-temporal repair within native self-attention. Extensive experiments demonstrate that ArtifactWorld achieves state-of-the-art performance in sparse novel view synthesis and robust 3D reconstruction. Code and dataset will be made public.
-      </p>
+    <section id="teaser">
+      <h2>Teaser</h2>
+      <hr class="section-rule" />
+      <p class="prose">Short orbit / comparison video (layout mirrors NVIDIA SIL project pages such as <a href="https://research.nvidia.com/labs/sil/projects/artifixer/" target="_blank" rel="noopener">ArtiFixer</a>): full content width, 16:9 stage, caption strip, optional scene tabs below.</p>
+      <div class="video-block">
+        <div class="video-stage">
+          <video id="teaser-video" controls playsinline muted loop preload="metadata" src="assets/teaser.mp4"></video>
+        </div>
+        <div class="video-caption" id="teaser-caption">Main teaser — replace <code>assets/teaser.mp4</code>.</div>
+        <div class="tab-strip" role="tablist" aria-label="Teaser variants">
+          <button type="button" class="active" data-src="assets/teaser.mp4" data-cap="Main teaser">Default</button>
+          <button type="button" data-src="assets/teaser_scene2.mp4" data-cap="Alternate clip (optional)">Scene 2</button>
+          <button type="button" data-src="assets/teaser_scene3.mp4" data-cap="Alternate clip (optional)">Scene 3</button>
+        </div>
+      </div>
     </section>
 
-    <section>
-      <h2>BibTeX</h2>
+    <section id="abstract">
+      <h2>Abstract</h2>
+      <hr class="section-rule" />
+      <div class="prose">
+        <p>
+          3D Gaussian Splatting (3DGS) delivers high-fidelity real-time rendering but suffers from geometric and photometric degradations under sparse-view constraints. Current generative restoration approaches are often limited by insufficient temporal coherence, a lack of explicit spatial constraints, and a lack of large-scale training data, resulting in multi-view inconsistencies, erroneous geometric hallucinations, and limited generalization to diverse real-world artifact distributions.
+        </p>
+        <p>
+          In this paper, we present <strong>ArtifactWorld</strong>, a framework that resolves 3DGS artifact repair through systematic data expansion and a homogeneous dual-model paradigm. We establish a fine-grained phenomenological taxonomy of 3DGS artifacts and construct a comprehensive training set of 107.5K diverse paired video clips. Architecturally, we unify the restoration process within a video diffusion backbone, utilizing an isomorphic predictor to localize structural defects via an artifact heatmap, which guides restoration through an Artifact-Aware Triplet Fusion mechanism. Extensive experiments demonstrate state-of-the-art performance in sparse novel view synthesis and robust 3D reconstruction. Code and dataset will be made public.
+        </p>
+      </div>
+    </section>
+
+    <section id="method">
+      <h2>Method</h2>
+      <hr class="section-rule" />
+      <div class="prose">
+        <p>
+          ArtifactWorld uses a video diffusion backbone with a defect-localization branch (artifact heatmap) and Artifact-Aware Triplet Fusion so spatio-temporal repair stays aligned with corrupted regions while preserving multi-view coherence—conceptually similar in spirit to “wide video + clear sectioning” on project pages like ArtiFixer, but for 3DGS artifact restoration rather than NVS extrapolation.
+        </p>
+      </div>
+      <div class="video-block" style="margin-top:1rem;">
+        <div class="video-stage">
+          <video controls playsinline muted loop preload="metadata" src="assets/method.mp4"></video>
+        </div>
+        <div class="video-caption">Method overview video — add <code>assets/method.mp4</code> (diagram / pipeline animation).</div>
+      </div>
+    </section>
+
+    <section id="comparisons">
+      <h2>Qualitative comparisons</h2>
+      <hr class="section-rule" />
+      <p class="prose">Two-up video row (same width as ArtiFixer-style comparison blocks on wide screens; stacks on mobile).</p>
+      <div class="compare-grid">
+        <div class="compare-cell">
+          <p class="label">ArtifactWorld (ours)</p>
+          <div class="video-block">
+            <div class="video-stage">
+              <video controls playsinline muted loop preload="metadata" src="assets/compare_ours.mp4"></video>
+            </div>
+          </div>
+        </div>
+        <div class="compare-cell">
+          <p class="label">Baseline</p>
+          <div class="video-block">
+            <div class="video-stage">
+              <video controls playsinline muted loop preload="metadata" src="assets/compare_baseline.mp4"></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="citation">
+      <h2>Citation</h2>
+      <hr class="section-rule" />
       <pre><code>@article{wang2026artifactworld,
   title={ArtifactWorld: Scaling {3D} {G}aussian {S}platting Artifact Restoration via Video Generation Models},
   author={Wang, Xinliang and Shi, Yifeng and Wu, Zhenyu},
@@ -117,9 +298,29 @@
     </section>
 
     <footer>
-      This site is hosted with <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>.
-      Update this page in <code>index.html</code> on the default branch.
+      Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>. Page layout inspired by <a href="https://research.nvidia.com/labs/sil/projects/artifixer/" target="_blank" rel="noopener">ArtiFixer</a> (SIL / NVIDIA Research).
     </footer>
   </div>
+
+  <script>
+    (function () {
+      var v = document.getElementById("teaser-video");
+      var cap = document.getElementById("teaser-caption");
+      if (!v || !cap) return;
+      document.querySelectorAll(".tab-strip button").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var src = btn.getAttribute("data-src");
+          var c = btn.getAttribute("data-cap") || "";
+          document.querySelectorAll(".tab-strip button").forEach(function (b) { b.classList.remove("active"); });
+          btn.classList.add("active");
+          cap.textContent = c;
+          if (!src) return;
+          v.pause();
+          v.src = src;
+          v.load();
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
