@@ -9,207 +9,166 @@
   <meta property="og:description" content="Generative 3D reconstruction: 3DGS artifact restoration via video diffusion and large-scale paired video data." />
   <meta property="og:type" content="website" />
   <link rel="canonical" href="https://fyting.github.io/ArtifactWorld/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,600,400italic,600italic,300,300italic&family=Lato:300,400,700&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg0: #0a0c10;
-      --bg1: #12151c;
-      --panel: #161b24;
-      --panel2: #1c2230;
-      --text: #e8eaed;
-      --muted: #9aa3b2;
-      --rule: #2a3344;
-      --accent: #5eb0ff;
-      --accent-dim: #0074ff;
-      --glow: rgba(0, 116, 255, 0.14);
-      --max: 1000px;
-      --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      --serif: "Georgia", "Times New Roman", Times, serif;
-    }
     * { box-sizing: border-box; }
-    html {
-      scroll-behavior: smooth;
-      font-size: 106.25%;
-    }
+    html { scroll-behavior: smooth; font-size: 106.25%; }
     body {
       margin: 0;
-      font-family: var(--font);
-      color: var(--text);
-      line-height: 1.65;
-      font-size: 1rem;
-      background:
-        radial-gradient(1200px 600px at 18% -8%, var(--glow), transparent 55%),
-        radial-gradient(900px 500px at 88% 12%, rgba(0, 116, 255, 0.07), transparent 50%),
-        linear-gradient(165deg, var(--bg0) 0%, var(--bg1) 45%, #0d1018 100%);
-      min-height: 100vh;
+      font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      color: #222;
+      line-height: 1.5;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 1000px;
+      padding: 0 20px 48px;
+      background: #fff;
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; color: #a8d4ff; }
-    .page {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 2rem 1.25rem 4.5rem;
-    }
-    .hero {
+    a:link, a:visited { color: #1772d0; text-decoration: none; }
+    a:hover { color: #f09228; }
+    h1 {
+      font-weight: 500;
+      line-height: 1.15;
+      font-size: clamp(1.35rem, 4vw, 2.05rem);
       text-align: center;
-      padding: 2rem 1.25rem 2.25rem;
-      margin: 0 -1.25rem 2.5rem;
-      border-bottom: 1px solid var(--rule);
-      background: linear-gradient(180deg, rgba(22, 27, 36, 0.65) 0%, transparent 100%);
+      margin: 0;
+      color: #111;
     }
-    .hero-inner { max-width: 52rem; margin: 0 auto; }
-    .eyebrow {
-      display: inline-block;
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent-dim);
-      margin-bottom: 0.75rem;
+    h2 {
+      font-size: 1.5em;
+      font-weight: 400;
+      margin: 0 0 10px;
+      text-align: center;
+      color: #111;
+    }
+    hr {
+      height: 1px;
+      border: 0;
+      border-top: 1px solid #ddd;
+      margin: 0 0 1.125rem;
+    }
+    .text-center { text-align: center; }
+    .container { margin-left: auto; margin-right: auto; }
+    .paper-title { padding: 16px 0; }
+    .tagline {
+      text-align: center;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      color: #666;
+      margin-bottom: 10px;
       font-weight: 600;
     }
-    h1 {
-      font-family: var(--serif);
-      font-size: clamp(1.5rem, 4.2vw, 2.05rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.22;
-      margin: 0 0 1rem;
-      color: #f1f5f9;
+    section {
+      margin: 32px 0;
+      text-align: justify;
+      clear: both;
     }
-    .authors { color: var(--muted); font-size: 1.02rem; margin: 0 0 0.5rem; }
-    .authors .name { color: var(--text); }
-    .corr-mark { font-weight: 700; color: inherit; }
+    .author-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: baseline;
+      gap: 0.35rem 1.25rem;
+      font-size: 18px;
+      font-weight: 400;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .authors .name { color: #111; display: inline-block; }
+    .author-row sup.corr-mark {
+      font-size: 0.72em;
+      font-weight: 700;
+      line-height: 0;
+      vertical-align: super;
+      position: relative;
+      top: 0;
+    }
     .affil-row {
-      display: inline-flex;
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 0.55rem;
-      flex-wrap: wrap;
-      font-size: 0.98rem;
-      color: var(--muted);
-      margin: 0.35rem 0 0;
+      gap: 0.5rem;
+      font-size: 18px;
+      color: #444;
+      margin-top: 10px;
     }
     .ke-logo {
       height: 1.55rem;
       width: auto;
       vertical-align: middle;
-      opacity: 0.95;
-      filter: brightness(1.08);
     }
-    .corr-note {
-      font-size: 0.86rem;
-      color: var(--muted);
-      margin: 0.35rem 0 0;
+    .corr-note { font-size: 15px; color: #555; text-align: center; margin: 8px 0 0; }
+    .venue-row {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 400;
+      margin-top: 12px;
+      color: #333;
     }
-    .venue {
-      display: inline-block;
-      margin: 1rem 0 0;
-      padding: 0.28rem 0.85rem;
-      font-size: 0.82rem;
-      color: var(--muted);
-      border: 1px solid var(--rule);
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.2);
-    }
-    .links-row {
+    .paper-btn-parent {
       display: flex;
+      justify-content: center;
       flex-wrap: wrap;
-      gap: 0.55rem;
-      justify-content: center;
-      align-items: center;
-      margin-top: 1.35rem;
+      margin: 16px 0;
+      gap: 8px;
     }
-    .chip-icon {
-      display: inline-flex;
-      width: 1.08em;
-      height: 1.08em;
-      flex-shrink: 0;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.9;
-    }
-    .chip-icon svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.48rem 1rem;
-      border: 1px solid var(--rule);
-      border-radius: 999px;
-      background: rgba(28, 34, 48, 0.85);
-      color: var(--text);
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: border-color 0.15s, background 0.15s, color 0.15s;
-    }
-    .chip:hover {
-      border-color: var(--accent-dim);
-      background: rgba(0, 116, 255, 0.12);
-      color: #f0f7ff;
+    .supp-btn {
+      background: #fff;
+      border: 1.5px solid #000;
+      color: #000 !important;
+      font-size: 16px;
+      padding: 10px 22px;
+      border-radius: 50px;
+      text-align: center;
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.35s, color 0.35s, border-color 0.35s;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      font-weight: 400;
+      font-family: inherit;
     }
-    section {
-      margin-top: 2.75rem;
-      padding: 1.35rem 1.35rem 1.45rem;
-      border: 1px solid var(--rule);
-      border-radius: 12px;
-      background: linear-gradient(145deg, var(--panel) 0%, var(--panel2) 100%);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    .supp-btn:hover {
+      background: #000;
+      color: #fff !important;
     }
-    section > h2,
-    .bib-head h2 {
-      margin: 0;
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-    hr.section-rule {
-      border: none;
-      border-top: 1px solid var(--rule);
-      margin: 0.75rem 0 1rem;
-      opacity: 0.85;
-    }
-    .prose { color: #c5ccd8; }
-    .prose p { margin: 0 0 0.85rem; }
-    .prose ul { margin: 0 0 0.85rem; padding-left: 1.2rem; }
-    .prose li { margin: 0.4rem 0; }
-    .prose li::marker { color: var(--muted); }
-    .prose strong { color: #e2e8f0; }
+    .supp-btn .v2-icon { display: inline-flex; width: 1.1em; height: 1.1em; flex-shrink: 0; }
+    .supp-btn .v2-icon svg { width: 100%; height: 100%; display: block; }
+    .supp-btn--compact { font-size: 15px; padding: 8px 18px; }
+    .prose { color: #333; }
+    .prose p { margin: 0 0 12px; }
+    .prose ul { margin: 0 0 12px; padding-left: 1.25rem; }
+    .prose li { margin: 6px 0; }
+    .prose strong { color: #111; font-weight: 600; }
     .figure-panel {
-      margin-top: 1rem;
-      margin-left: -0.5rem;
-      margin-right: -0.5rem;
-      width: calc(100% + 1rem);
-      border: 1px solid var(--rule);
-      border-radius: 8px;
+      margin-top: 20px;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
       overflow: hidden;
-      background: #0a0d12;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+      background: #fafafa;
     }
-    .figure-panel img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
+    .figure-panel img { display: block; width: 100%; height: auto; }
     .video-block {
-      margin-top: 1rem;
-      border: 1px solid var(--rule);
-      border-radius: 8px;
+      margin-top: 16px;
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
       overflow: hidden;
-      background: #080a0e;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      background: #f8f9fa;
     }
     .video-tabs > .video-block { margin-top: 0; }
     .video-stage {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      background: #050608;
+      background: #0a0a0a;
     }
     .video-stage video {
       position: absolute;
@@ -221,37 +180,33 @@
       background: #000;
       cursor: pointer;
     }
-    .video-stage.video-stage--grid2x2 {
-      aspect-ratio: 1920 / 1088;
-    }
+    .video-stage.video-stage--grid2x2 { aspect-ratio: 1920 / 1088; }
     .tab-strip {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
-      padding: 0.7rem 0.8rem;
-      border-top: 1px solid var(--rule);
-      background: rgba(10, 12, 18, 0.9);
+      gap: 8px;
+      justify-content: center;
+      padding: 12px 10px;
+      border-top: 1px solid #dee2e6;
+      background: #f8f9fa;
     }
     .tab-strip button {
       font: inherit;
       cursor: pointer;
-      border: 1px solid var(--rule);
-      border-radius: 999px;
-      padding: 0.38rem 0.75rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      background: rgba(22, 27, 36, 0.9);
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+      padding: 6px 14px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #333;
+      background: #fff;
+      transition: background 0.25s, border-color 0.25s, color 0.25s;
     }
-    .tab-strip button:hover {
-      color: var(--text);
-      border-color: #3d4a60;
-      background: rgba(30, 41, 59, 0.95);
-    }
+    .tab-strip button:hover { border-color: #adb5bd; background: #fff; }
     .tab-strip button.active {
-      color: #031428;
-      background: var(--accent-dim);
-      border-color: transparent;
-      font-weight: 600;
+      background: #000;
+      color: #fff;
+      border-color: #000;
     }
     .video-nav {
       position: absolute;
@@ -261,108 +216,83 @@
       width: 2.35rem;
       height: 2.35rem;
       padding: 0;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
       border-radius: 999px;
       font: inherit;
       font-size: 1.35rem;
       line-height: 1;
-      color: #e8eaed;
-      background: rgba(8, 10, 14, 0.72);
+      color: #fff;
+      background: rgba(0, 0, 0, 0.55);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      transition: background 0.2s, border-color 0.2s;
     }
-    .video-nav:hover {
-      background: rgba(30, 41, 59, 0.88);
-      border-color: rgba(0, 116, 255, 0.45);
-      color: #a8d4ff;
-    }
-    .video-nav--prev { left: 0.55rem; }
-    .video-nav--next { right: 0.55rem; }
-    .bib-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.65rem;
-    }
-    .bib-head h2 { margin: 0; }
-    .btn-copy {
-      font: inherit;
-      cursor: pointer;
-      padding: 0.4rem 0.95rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #031428;
-      background: var(--accent-dim);
-      border: none;
-      border-radius: 8px;
-      transition: opacity 0.15s, transform 0.1s;
-    }
-    .btn-copy:hover { opacity: 0.92; transform: translateY(-1px); }
-    .btn-copy:active { transform: translateY(0); }
+    .video-nav:hover { background: rgba(0, 0, 0, 0.78); border-color: #fff; }
+    .video-nav--prev { left: 10px; }
+    .video-nav--next { right: 10px; }
     pre {
-      margin: 0;
-      padding: 1rem 1.1rem;
-      background: #080b10;
-      border: 1px solid var(--rule);
-      border-radius: 8px;
+      margin: 16px 0 0;
+      padding: 14px 16px;
+      background: #f8f9fa;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
       overflow-x: auto;
-      font-size: 0.78rem;
+      font-size: 14px;
       line-height: 1.45;
-      color: #cbd5e1;
+      color: #222;
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <header class="hero">
-      <div class="hero-inner">
-        <span class="eyebrow">Generative 3D reconstruction</span>
-        <h1>ArtifactWorld: Scaling 3D Gaussian Splatting Artifact Restoration via Video Generation Models</h1>
-        <p class="authors">
-          <span class="name">Xinliang Wang</span>,
-          <span class="name">Yifeng Shi<sup class="corr-mark" aria-label="Corresponding author">*</sup></span>,
-          <span class="name">Zhenyu Wu</span>
-        </p>
-        <p class="affil-row">
-          <img class="ke-logo" src="src/log" width="120" height="40" alt="Ke Holdings Inc." loading="lazy" decoding="async" />
-          <span>Ke Holdings Inc.</span>
-        </p>
-        <p class="corr-note">* Corresponding author</p>
-        <p class="venue">Preprint · 2026</p>
-        <div class="links-row">
-          <a class="chip" href="https://arxiv.org/abs/2604.12251" target="_blank" rel="noopener">
-            <span class="chip-icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3.8423 0a1.0037 1.0037 0 0 0-.922.6078c-.1536.3687-.0438.6275.2938 1.1113l6.9185 8.3597-1.0223 1.1058a1.0393 1.0393 0 0 0 .003 1.4229l1.2292 1.3135-5.4391 6.4444c-.2803.299-.4538.823-.2971 1.1986a1.0253 1.0253 0 0 0 .9585.635.9133.9133 0 0 0 .6891-.3405l5.783-6.126 7.4902 8.0051a.8527.8527 0 0 0 .6835.2597.9575.9575 0 0 0 .8777-.6138c.1577-.377-.017-.7502-.306-1.1407l-7.0518-8.3418 1.0632-1.13a.9626.9626 0 0 0 .0089-1.3165L4.6336.4639s-.3733-.4535-.768-.463zm0 .272h.0166c.2179.0052.4874.2715.5644.3639l.005.006.0052.0055 10.169 10.9905a.6915.6915 0 0 1-.0072.945l-1.0666 1.133-1.4982-1.7724-8.5994-10.39c-.3286-.472-.352-.6183-.2592-.841a.7307.7307 0 0 1 .6704-.4401Zm14.341 1.5701a.877.877 0 0 0-.6554.2418l-5.6962 6.1584 1.6944 1.8319 5.3089-6.5138c.3251-.4335.479-.6603.3247-1.0292a1.1205 1.1205 0 0 0-.9763-.689zm-7.6557 12.2823 1.3186 1.4135-5.7864 6.1295a.6494.6494 0 0 1-.4959.26.7516.7516 0 0 1-.706-.4669c-.1119-.2682.0359-.6864.2442-.9083l.0051-.0055.0047-.0055z"/></svg>
-            </span>
-            Paper
-          </a>
-          <a class="chip" href="https://github.com/fyting/ArtifactWorld" target="_blank" rel="noopener">
-            <span class="chip-icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            </span>
-            Code
-          </a>
-          <a class="chip" href="#citation">
-            <span class="chip-icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M11.25 4.53286C9.73455 3.56279 7.93246 3 6 3C4.86178 3 3.76756 3.19535 2.75007 3.55499C2.45037 3.66091 2.25 3.94425 2.25 4.26212V18.5121C2.25 18.7556 2.36818 18.9839 2.56696 19.1245C2.76574 19.265 3.02039 19.3004 3.24993 19.2192C4.10911 18.9156 5.03441 18.75 6 18.75C7.99502 18.75 9.82325 19.4573 11.25 20.6357V4.53286Z" />
-                <path d="M12.75 20.6357C14.1768 19.4573 16.005 18.75 18 18.75C18.9656 18.75 19.8909 18.9156 20.7501 19.2192C20.9796 19.3004 21.2343 19.265 21.433 19.1245C21.6318 18.9839 21.75 18.7556 21.75 18.5121V4.26212C21.75 3.94425 21.5496 3.66091 21.2499 3.55499C20.2324 3.19535 19.1382 3 18 3C16.0675 3 14.2655 3.56279 12.75 4.53286V20.6357Z" />
-              </svg>
-            </span>
-            BibTeX
-          </a>
-        </div>
+  <div class="container">
+    <div class="paper-title">
+      <p class="tagline">Generative 3D reconstruction</p>
+      <h1>ArtifactWorld: Scaling 3D Gaussian Splatting Artifact Restoration via Video Generation Models</h1>
+    </div>
+
+    <div id="authors">
+      <div class="author-row authors">
+        <span class="name">Xinliang Wang</span>
+        <span class="name">Yifeng Shi<sup class="corr-mark" aria-label="Corresponding author">†</sup></span>
+        <span class="name">Zhenyu Wu</span>
       </div>
-    </header>
+      <div class="affil-row">
+        <img class="ke-logo" src="src/log" width="120" height="40" alt="Ke Holdings Inc." loading="lazy" decoding="async" />
+        <span>Ke Holdings Inc.</span>
+      </div>
+      <p class="corr-note">† Corresponding author</p>
+      <div class="venue-row">Preprint · 2026</div>
+
+      <div class="paper-btn-parent">
+        <a class="supp-btn" href="https://arxiv.org/abs/2604.12251" target="_blank" rel="noopener">
+          <span class="v2-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3.8423 0a1.0037 1.0037 0 0 0-.922.6078c-.1536.3687-.0438.6275.2938 1.1113l6.9185 8.3597-1.0223 1.1058a1.0393 1.0393 0 0 0 .003 1.4229l1.2292 1.3135-5.4391 6.4444c-.2803.299-.4538.823-.2971 1.1986a1.0253 1.0253 0 0 0 .9585.635.9133.9133 0 0 0 .6891-.3405l5.783-6.126 7.4902 8.0051a.8527.8527 0 0 0 .6835.2597.9575.9575 0 0 0 .8777-.6138c.1577-.377-.017-.7502-.306-1.1407l-7.0518-8.3418 1.0632-1.13a.9626.9626 0 0 0 .0089-1.3165L4.6336.4639s-.3733-.4535-.768-.463zm0 .272h.0166c.2179.0052.4874.2715.5644.3639l.005.006.0052.0055 10.169 10.9905a.6915.6915 0 0 1-.0072.945l-1.0666 1.133-1.4982-1.7724-8.5994-10.39c-.3286-.472-.352-.6183-.2592-.841a.7307.7307 0 0 1 .6704-.4401Zm14.341 1.5701a.877.877 0 0 0-.6554.2418l-5.6962 6.1584 1.6944 1.8319 5.3089-6.5138c.3251-.4335.479-.6603.3247-1.0292a1.1205 1.1205 0 0 0-.9763-.689zm-7.6557 12.2823 1.3186 1.4135-5.7864 6.1295a.6494.6494 0 0 1-.4959.26.7516.7516 0 0 1-.706-.4669c-.1119-.2682.0359-.6864.2442-.9083l.0051-.0055.0047-.0055z"/></svg>
+          </span>
+          Paper
+        </a>
+        <a class="supp-btn" href="https://github.com/fyting/ArtifactWorld" target="_blank" rel="noopener">
+          <span class="v2-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </span>
+          Code
+        </a>
+        <a class="supp-btn" href="#citation">
+          <span class="v2-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.25 4.53286C9.73455 3.56279 7.93246 3 6 3C4.86178 3 3.76756 3.19535 2.75007 3.55499C2.45037 3.66091 2.25 3.94425 2.25 4.26212V18.5121C2.25 18.7556 2.36818 18.9839 2.56696 19.1245C2.76574 19.265 3.02039 19.3004 3.24993 19.2192C4.10911 18.9156 5.03441 18.75 6 18.75C7.99502 18.75 9.82325 19.4573 11.25 20.6357V4.53286Z" />
+              <path d="M12.75 20.6357C14.1768 19.4573 16.005 18.75 18 18.75C18.9656 18.75 19.8909 18.9156 20.7501 19.2192C20.9796 19.3004 21.2343 19.265 21.433 19.1245C21.6318 18.9839 21.75 18.7556 21.75 18.5121V4.26212C21.75 3.94425 21.5496 3.66091 21.2499 3.55499C20.2324 3.19535 19.1382 3 18 3C16.0675 3 14.2655 3.56279 12.75 4.53286V20.6357Z" />
+            </svg>
+          </span>
+          BibTeX
+        </a>
+      </div>
+    </div>
 
     <section id="abstract">
       <h2>Abstract</h2>
-      <hr class="section-rule" />
+      <hr />
       <div class="prose">
         <p>
           3D Gaussian Splatting (3DGS) delivers high-fidelity real-time rendering but suffers from geometric and photometric degradations under sparse-view constraints. Current generative restoration approaches are often limited by insufficient temporal coherence, a lack of explicit spatial constraints, and a lack of large-scale training data, resulting in multi-view inconsistencies, erroneous geometric hallucinations, and limited generalization to diverse real-world artifact distributions. In this paper, we present ArtifactWorld, a framework that resolves 3DGS artifact repair through systematic data expansion and a homogeneous dual-model paradigm. To address the data bottleneck, we establish a fine-grained phenomenological taxonomy of 3DGS artifacts and construct a comprehensive training set of 107.5K diverse paired video clips to enhance model robustness. Architecturally, we unify the restoration process within a video diffusion backbone, utilizing an isomorphic predictor to localize structural defects via an artifact heatmap. This heatmap then guides the restoration through an Artifact-Aware Triplet Fusion mechanism, enabling precise, intensity-guided spatio-temporal repair within native self-attention. Extensive experiments demonstrate that ArtifactWorld achieves state-of-the-art performance in sparse novel view synthesis and robust 3D reconstruction.
@@ -370,42 +300,9 @@
       </div>
     </section>
 
-    <section id="benchmark">
-      <h2>Data: Generative Flywheel Dataset</h2>
-      <hr class="section-rule" />
-      <div class="prose">
-        <p>We built the largest 3DGS restoration dataset to date to break the data scaling bottleneck.</p>
-        <ul>
-          <li><strong>Taxonomy:</strong> Defined 9 fine grained 3DGS sparse view artifact types across 4 domains.</li>
-          <li><strong>Generative Engine:</strong> Automated data generation using a Vision Language Model and LTX Video to construct 107.5K diverse training pairs.</li>
-          <li><strong>Benchmark:</strong> Released a manually audited 1.28K evaluation set for standardized testing.</li>
-        </ul>
-      </div>
-      <figure class="figure-panel">
-        <img src="src/data.png" alt="ArtifactWorld benchmark overview: taxonomy, data curation, and generative scaling." width="1200" height="675" loading="lazy" decoding="async" />
-      </figure>
-    </section>
-
-    <section id="methodology">
-      <h2>Method: Homogeneous Dual Model Paradigm</h2>
-      <hr class="section-rule" />
-      <div class="prose">
-        <p>ArtifactWorld unifies spatial and temporal restoration within a single video diffusion backbone.</p>
-        <ul>
-          <li><strong>Decoupled Boundary Anchoring (DBA):</strong> Anchors pristine ground truth views at temporal boundaries to provide clean spatial contexts.</li>
-          <li><strong>Isomorphic Prediction:</strong> Generates an explicit spatial heatmap internally to locate structural defects.</li>
-          <li><strong>Artifact Aware Triplet Fusion (AATF):</strong> Uses the heatmap for dynamic intensity guidance, repairing severe artifacts while preserving clean textures.</li>
-          <li><strong>Closed Loop Reconstruction:</strong> Distills restored frames back into 3D space to permanently eliminate geometric defects.</li>
-        </ul>
-      </div>
-      <figure class="figure-panel">
-        <img src="src/method.png" alt="ArtifactWorld framework: DBA, heatmap prediction, AATF restoration, and closed-loop 3DGS reconstruction." width="1200" height="675" loading="lazy" decoding="async" />
-      </figure>
-    </section>
-
     <section id="artifact-restoration">
       <h2>Artifact Restoration Comparisons</h2>
-      <hr class="section-rule" />
+      <hr />
       <p class="prose">2D Restoration Comparison across 9 Artifact Categories.</p>
       <div class="video-tabs" data-carousel-ms="8000" style="margin-top:1rem;">
         <div class="video-block">
@@ -429,7 +326,7 @@
 
     <section id="gen-recon">
       <h2>Generative Reconstruction Comparisons</h2>
-      <hr class="section-rule" />
+      <hr />
       <p class="prose">Generative reconstruction comparisons on DL3DV / Mip-NeRF 360.</p>
       <div class="video-tabs video-tabs--arrows" data-carousel-ms="8000" data-sources="src/3d_cmp/case1.mp4,src/3d_cmp/case2.mp4,src/3d_cmp/case3.mp4,src/3d_cmp/case4.mp4" style="margin-top:1rem;">
         <div class="video-block">
@@ -442,12 +339,45 @@
       </div>
     </section>
 
-    <section id="citation">
-      <div class="bib-head">
-        <h2>Citation</h2>
-        <button type="button" class="btn-copy" id="copy-bibtex">Copy</button>
+    <section id="benchmark">
+      <h2>Data: Generative Flywheel Dataset</h2>
+      <hr />
+      <div class="prose">
+        <p>We built the largest 3DGS restoration dataset to date to break the data scaling bottleneck.</p>
+        <ul>
+          <li><strong>Taxonomy:</strong> Defined 9 fine grained 3DGS sparse view artifact types across 4 domains.</li>
+          <li><strong>Generative Engine:</strong> Automated data generation using a Vision Language Model and LTX Video to construct 107.5K diverse training pairs.</li>
+          <li><strong>Benchmark:</strong> Released a manually audited 1.28K evaluation set for standardized testing.</li>
+        </ul>
       </div>
-      <hr class="section-rule" />
+      <figure class="figure-panel">
+        <img src="src/data.png" alt="ArtifactWorld benchmark overview: taxonomy, data curation, and generative scaling." width="1200" height="675" loading="lazy" decoding="async" />
+      </figure>
+    </section>
+
+    <section id="methodology">
+      <h2>Method: Homogeneous Dual Model Paradigm</h2>
+      <hr />
+      <div class="prose">
+        <p>ArtifactWorld unifies spatial and temporal restoration within a single video diffusion backbone.</p>
+        <ul>
+          <li><strong>Decoupled Boundary Anchoring (DBA):</strong> Anchors pristine ground truth views at temporal boundaries to provide clean spatial contexts.</li>
+          <li><strong>Isomorphic Prediction:</strong> Generates an explicit spatial heatmap internally to locate structural defects.</li>
+          <li><strong>Artifact Aware Triplet Fusion (AATF):</strong> Uses the heatmap for dynamic intensity guidance, repairing severe artifacts while preserving clean textures.</li>
+          <li><strong>Closed Loop Reconstruction:</strong> Distills restored frames back into 3D space to permanently eliminate geometric defects.</li>
+        </ul>
+      </div>
+      <figure class="figure-panel">
+        <img src="src/method.png" alt="ArtifactWorld framework: DBA, heatmap prediction, AATF restoration, and closed-loop 3DGS reconstruction." width="1200" height="675" loading="lazy" decoding="async" />
+      </figure>
+    </section>
+
+    <section id="citation">
+      <h2>Citation</h2>
+      <hr />
+      <p class="text-center" style="margin:12px 0">
+        <button type="button" class="supp-btn supp-btn--compact" id="copy-bibtex">Copy BibTeX</button>
+      </p>
       <pre><code id="bibtex-code">@article{wang2026artifactworld,
   title={ArtifactWorld: Scaling 3D Gaussian Splatting Artifact Restoration via Video Generation Models},
   author={Wang, Xinliang and Shi, Yifeng and Wu, Zhenyu},
