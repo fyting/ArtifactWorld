@@ -2,7 +2,7 @@
 
 **ArtifactWorld: Scaling 3D Gaussian Splatting Artifact Restoration via Video Generation Models**
 
-[![arXiv](https://img.shields.io/badge/arXiv-2604.12251-b31b1b.svg)](https://arxiv.org/abs/2604.12251) [![PDF](https://img.shields.io/badge/PDF-arXiv-red.svg)](https://arxiv.org/pdf/2604.12251.pdf) [![Project Page](https://img.shields.io/badge/Project-ArtifactWorld-blue.svg)](https://fyting.github.io/ArtifactWorld/) [![Dataset](https://img.shields.io/badge/HuggingFace-ArtifactWorld--Benchmark-yellow.svg)](https://huggingface.co/datasets/buaadwxl/ArtifactWorld-Benchmark/tree/main) [![Weights](https://img.shields.io/badge/HuggingFace-ArtifactWorld%20Weights-orange.svg)](https://huggingface.co/buaadwxl/ArtifactWorld/tree/main) [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+[![arXiv](https://img.shields.io/badge/arXiv-2604.12251-b31b1b.svg)](https://arxiv.org/abs/2604.12251) [![PDF](https://img.shields.io/badge/PDF-arXiv-red.svg)](https://arxiv.org/pdf/2604.12251.pdf) [![Project Page](https://img.shields.io/badge/Project-ArtifactWorld-blue.svg)](https://fyting.github.io/ArtifactWorld/) [![Dataset](https://img.shields.io/badge/HuggingFace-ArtifactWorld--Benchmark-yellow.svg)](https://huggingface.co/datasets/buaadwxl/ArtifactWorld-Benchmark/tree/main) [![Weights](https://img.shields.io/badge/HuggingFace-ArtifactWorld%20Weights-orange.svg)](https://huggingface.co/buaadwxl/ArtifactWorld/tree/main) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Sparse-view 3D Gaussian Splatting (3DGS) often suffers from geometric and photometric degradation. ArtifactWorld scales artifact restoration using **systematic data expansion** and a **homogeneous dual-model** paradigm on a shared video diffusion backbone: a shared-structure predictor estimates an **artifact heatmap** first; at **restoration** time, **Artifact-Aware Triplet Fusion (AATF)** and **Decoupled Boundary Anchoring (DBA)** **work together** inside native self-attention for intensity-guided spatiotemporal repair and improved 3D reconstruction. See the paper: [arXiv:2604.12251](https://arxiv.org/abs/2604.12251) · [PDF](https://arxiv.org/pdf/2604.12251.pdf).
 
@@ -14,7 +14,7 @@ This repository is the **official ArtifactWorld codebase**. It currently ships r
 - **Released:** Two-stage LoRA weights and AATF auxiliary latents consistent with the paper ([Hugging Face weights](https://huggingface.co/buaadwxl/ArtifactWorld/tree/main), `weights.tar`), plus runnable inference code under `stages/`.
 - **Planned:** Large-scale training data (107.5K generative flywheel scale from the paper) and training code.
 
-**License:** [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (`LICENSE` in the repo root). **Non-commercial use only.**
+**License:** This repository’s code is licensed under the **Apache License 2.0** (see `LICENSE` in the repo root). Third-party components under `stages/` retain their own license files (e.g. LTX-Video–related notices).
 
 ---
 
