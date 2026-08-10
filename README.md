@@ -81,34 +81,36 @@ The weights root should contain (or adjust `ARTIFACTWORLD_WEIGHTS_ROOT` accordin
 | `auxiliary_latents/z_full.pt` | Stage-2: AATF auxiliary latent (one fusion branch) |
 | `auxiliary_latents/z_null.pt` | Stage-2: AATF auxiliary latent (other fusion branch) |
 
-`stage1_infer.yaml` / `stage2_infer.yaml` expose explicit LTX base paths: `scheduler_source`, `tokenizer_source`, `text_encoder_source`, `vae_source`, `transformer_source`. The loader **appends standard subfolders** (`tokenizer/`, `text_encoder/`, `vae/`, `scheduler/`, `transformer/`). Therefore each field must point at a **repository root** or **Hugging Face snapshot root**, not at `.../tokenizer` or `.../transformer`, or you will get doubled subfolders or missing sharded weights.
+`stage1_infer.yaml` / `stage2_infer.yaml` expose explicit LTX base paths: `scheduler_source`, `tokenizer_source`, `text_encoder_source`, `vae_source`, `transformer_source`. For **directory** roots, the loader **appends standard subfolders** (`tokenizer/`, `text_encoder/`, `vae/`, `scheduler/`, `transformer/`). Point those fields at a **repository root** or **Hugging Face snapshot root**, not at `.../tokenizer` or `.../scheduler`, or you will get doubled subfolders. If `transformer_source` is a path ending in `.safetensors`, it is loaded via `from_single_file` and does **not** append `subfolder="transformer"`.
 
 **Convention:**
 
-| Fields | Root directory to use | Environment variable |
-|--------|----------------------|----------------------|
+| Fields | Root / path to use | Environment variable |
+|--------|--------------------|----------------------|
 | `tokenizer_source`, `text_encoder_source`, `vae_source` | Root of [Lightricks/LTX-Video](https://huggingface.co/Lightricks/LTX-Video) (or local snapshot with `tokenizer/`, `text_encoder/`, `vae/` directly underneath) | `ARTIFACTWORLD_LTX_MAIN_ROOT` |
-| `scheduler_source`, `transformer_source` | Root of [Lightricks/LTX-Video-0.9.7-dev](https://huggingface.co/Lightricks/LTX-Video-0.9.7-dev) (with `scheduler/`, `transformer/` underneath) | `ARTIFACTWORLD_LTX_097_DEV_ROOT` |
+| `scheduler_source` | Root of [Lightricks/LTX-Video-0.9.7-dev](https://huggingface.co/Lightricks/LTX-Video-0.9.7-dev) (with `scheduler/` underneath) | `ARTIFACTWORLD_LTX_097_DEV_ROOT` |
+| `transformer_source` | Single-file `ltxv-13b-0.9.8-distilled.safetensors` under LTX-Video (e.g. `__LTX_MAIN_ROOT__/ltxv-13b-0.9.8-distilled.safetensors`) | `ARTIFACTWORLD_LTX_MAIN_ROOT` |
 
 ```bash
-# LTX-Video (tokenizer / text_encoder / vae)
+# LTX-Video (tokenizer / text_encoder / vae + 0.9.8 distilled transformer .safetensors)
 export ARTIFACTWORLD_LTX_MAIN_ROOT=/path/to/LTX-Video
 
-# LTX-Video-0.9.7-dev (scheduler + sharded transformer)
+# LTX-Video-0.9.7-dev (scheduler only)
 export ARTIFACTWORLD_LTX_097_DEV_ROOT=/path/to/LTX-Video-0.9.7-dev
 ```
 
 Defaults if unset:
 
 - `ArtifactWorld-main/weights/LTX-Video`
-- `ArtifactWorld-main/weights/LTX-Video-0.9.7-dev` (clone the full repo; do not point only at `.../transformer` or you will stack `subfolder="transformer"` twice)
+- `ArtifactWorld-main/weights/LTX-Video-0.9.7-dev` (clone the full repo for `scheduler/`; do not point only at a nested subfolder or you will stack subfolders twice)
 
 **Environment:** Use the same Python environment that has all dependencies installed (e.g. `conda activate ltx_video`, or that env’s `python`). Otherwise you may see missing packages (e.g. `typer`).
 
 Download LTX base weights before inference:
 
 - **VAE + tokenizer + text encoder:** [Lightricks/LTX-Video](https://huggingface.co/Lightricks/LTX-Video/tree/main)
-- **Scheduler + LTX-13B transformer (sharded):** [Lightricks/LTX-Video-0.9.7-dev](https://huggingface.co/Lightricks/LTX-Video-0.9.7-dev/tree/main) (clone the whole repo; no need to hand-split path levels)
+- **Transformer (0.9.8 distilled single file):** place `ltxv-13b-0.9.8-distilled.safetensors` under the LTX-Video root — [blob](https://huggingface.co/Lightricks/LTX-Video/blob/main/ltxv-13b-0.9.8-distilled.safetensors) / [resolve](https://huggingface.co/Lightricks/LTX-Video/resolve/main/ltxv-13b-0.9.8-distilled.safetensors)
+- **Scheduler:** [Lightricks/LTX-Video-0.9.7-dev](https://huggingface.co/Lightricks/LTX-Video-0.9.7-dev/tree/main) (clone the whole repo; only `scheduler/` is required for these configs)
 
 ---
 
@@ -231,8 +233,8 @@ CUDA_VISIBLE_DEVICES=0 ./scripts/run_pipeline_example.sh
 | Variable | Meaning |
 |----------|---------|
 | `ARTIFACTWORLD_WEIGHTS_ROOT` | Optional. Directory containing `stage*.safetensors` and `auxiliary_latents/`; default **`ArtifactWorld-main/weights/`** |
-| `ARTIFACTWORLD_LTX_MAIN_ROOT` | Optional. Root of `LTX-Video` (tokenizer / text_encoder / vae); default `ArtifactWorld-main/weights/LTX-Video` |
-| `ARTIFACTWORLD_LTX_097_DEV_ROOT` | Optional. Root of `LTX-Video-0.9.7-dev` (scheduler + transformer); default `ArtifactWorld-main/weights/LTX-Video-0.9.7-dev` |
+| `ARTIFACTWORLD_LTX_MAIN_ROOT` | Optional. Root of `LTX-Video` (tokenizer / text_encoder / vae + `ltxv-13b-0.9.8-distilled.safetensors`); default `ArtifactWorld-main/weights/LTX-Video` |
+| `ARTIFACTWORLD_LTX_097_DEV_ROOT` | Optional. Root of `LTX-Video-0.9.7-dev` (scheduler only); default `ArtifactWorld-main/weights/LTX-Video-0.9.7-dev` |
 | `LTX_STAGE1_ROOT` | Optional. Override Stage-1 code root; default `ArtifactWorld-main/stages/stage1` |
 | `LTX_STAGE2_ROOT` | Optional. Override Stage-2 code root; default `ArtifactWorld-main/stages/stage2` |
 | `CUDA_VISIBLE_DEVICES` | Optional GPU selection |

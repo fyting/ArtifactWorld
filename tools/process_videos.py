@@ -3,6 +3,7 @@
 
 import argparse
 import os
+import shutil
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -11,9 +12,28 @@ import cv2
 from tqdm import tqdm
 
 
+def resolve_ffmpeg():
+    for key in ("FFMPEG", "FFMPEG_BINARY"):
+        path = os.environ.get(key)
+        if path and os.path.isfile(path) and os.access(path, os.X_OK):
+            return path
+    path = shutil.which("ffmpeg")
+    if path:
+        return path
+    try:
+        import imageio_ffmpeg
+
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception as e:
+        raise FileNotFoundError(
+            "ffmpeg not found on PATH; install ffmpeg or imageio-ffmpeg, "
+            "or set FFMPEG to an absolute binary path"
+        ) from e
+
+
 def write_video_ffmpeg(output_path, frames, fps, width, height):
     cmd = [
-        "ffmpeg",
+        resolve_ffmpeg(),
         "-y",
         "-f",
         "rawvideo",

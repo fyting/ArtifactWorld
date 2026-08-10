@@ -1,6 +1,7 @@
 # ArtifactWorld stage-1: artifact heatmap / noisemap predictor (homogeneous dual-model, LoRA1).
 # Placeholders: __AW_ROOT__ (repo root), __WEIGHTS_ROOT__ (LoRA + aux latents),
-# __LTX_MAIN_ROOT__ (Lightricks/LTX-Video root), __LTX_097_DEV_ROOT__ (LTX-Video-0.9.7-dev root with scheduler/ and transformer/).
+# __LTX_MAIN_ROOT__ (Lightricks/LTX-Video root), __LTX_097_DEV_ROOT__ (LTX-Video-0.9.7-dev root with scheduler/ only).
+# transformer_source: 0.9.8 distilled single-file under LTX-Video (ltxv-13b-0.9.8-distilled.safetensors).
 
 model:
   model_source: "LTXV_13B_098_DISTILL"
@@ -10,7 +11,7 @@ model:
   tokenizer_source: "__LTX_MAIN_ROOT__"
   text_encoder_source: "__LTX_MAIN_ROOT__"
   vae_source: "__LTX_MAIN_ROOT__"
-  transformer_source: "__LTX_097_DEV_ROOT__"
+  transformer_source: "__LTX_MAIN_ROOT__/ltxv-13b-0.9.8-distilled.safetensors"
 
 lora:
   rank: 128
