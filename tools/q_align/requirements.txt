@@ -1,0 +1,17 @@
+transformers==4.36.1
+tokenizers==0.15.0
+sentencepiece==0.1.99
+accelerate==0.21.0
+peft==0.4.0
+bitsandbytes==0.41.0
+numpy<2
+scipy
+einops==0.6.1
+einops-exts==0.0.4
+timm==0.6.13
+decord
+Pillow
+protobuf
+safetensors
+tqdm
+icecream

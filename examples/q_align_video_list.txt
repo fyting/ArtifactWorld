@@ -1,0 +1,2 @@
+# One video path per line. Lines starting with # are ignored.
+# /path/to/video.mp4
