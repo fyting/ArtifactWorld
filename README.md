@@ -47,6 +47,7 @@ huggingface-cli download buaadwxl/ArtifactWorld-Benchmark --repo-type dataset --
 ```
 
 - **Generative flywheel training data (107.5K in the paper):** not shipped in this repo yet; status will be updated in News.
+- **Q-Align artifact classification:** Inference scripts are available in [`q_align/`](https://github.com/fyting/ArtifactWorld/tree/main/q_align).
 
 ---
 
