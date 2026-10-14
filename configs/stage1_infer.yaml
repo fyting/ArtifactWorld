@@ -10,7 +10,7 @@ model:
   scheduler_source: "__LTX_097_DEV_ROOT__"
   tokenizer_source: "__LTX_MAIN_ROOT__"
   text_encoder_source: "__LTX_MAIN_ROOT__"
-  vae_source: "__LTX_MAIN_ROOT__"
+  vae_source: "__LTX_VAE_ROOT__"   # 13B VAE (2.49GB); NOT LTX-Video's 2B vae
   transformer_source: "__LTX_MAIN_ROOT__/ltxv-13b-0.9.8-distilled.safetensors"
 
 lora:
