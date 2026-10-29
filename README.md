@@ -88,7 +88,8 @@ The weights root should contain (or adjust `ARTIFACTWORLD_WEIGHTS_ROOT` accordin
 
 | Fields | Root / path to use | Environment variable |
 |--------|--------------------|----------------------|
-| `tokenizer_source`, `text_encoder_source`, `vae_source` | Root of [Lightricks/LTX-Video](https://huggingface.co/Lightricks/LTX-Video) (or local snapshot with `tokenizer/`, `text_encoder/`, `vae/` directly underneath) | `ARTIFACTWORLD_LTX_MAIN_ROOT` |
+| `tokenizer_source`, `text_encoder_source` | Root of [Lightricks/LTX-Video](https://huggingface.co/Lightricks/LTX-Video) (or local snapshot with `tokenizer/`, `text_encoder/` directly underneath) | `ARTIFACTWORLD_LTX_MAIN_ROOT` |
+| `vae_source` | Root whose `vae/` is the **13B** VAE, e.g. [Lightricks/LTX-Video-0.9.8-13B-distilled](https://huggingface.co/Lightricks/LTX-Video-0.9.8-13B-distilled). **Do not** use `Lightricks/LTX-Video`'s `vae/`: that is the 2B VAE and it collapses both stages to a flat gray. | `ARTIFACTWORLD_LTX_VAE_ROOT` |
 | `scheduler_source` | Root of [Lightricks/LTX-Video-0.9.7-dev](https://huggingface.co/Lightricks/LTX-Video-0.9.7-dev) (with `scheduler/` underneath) | `ARTIFACTWORLD_LTX_097_DEV_ROOT` |
 | `transformer_source` | Single-file `ltxv-13b-0.9.8-distilled.safetensors` under LTX-Video (e.g. `__LTX_MAIN_ROOT__/ltxv-13b-0.9.8-distilled.safetensors`) | `ARTIFACTWORLD_LTX_MAIN_ROOT` |
 
@@ -98,6 +99,9 @@ export ARTIFACTWORLD_LTX_MAIN_ROOT=/path/to/LTX-Video
 
 # LTX-Video-0.9.7-dev (scheduler only)
 export ARTIFACTWORLD_LTX_097_DEV_ROOT=/path/to/LTX-Video-0.9.7-dev
+
+# 13B VAE (must NOT be Lightricks/LTX-Video's 2B vae/)
+export ARTIFACTWORLD_LTX_VAE_ROOT=/path/to/LTX-Video-0.9.8-13B-distilled
 ```
 
 Defaults if unset:
